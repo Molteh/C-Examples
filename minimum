@@ -1,0 +1,26 @@
+#include <stdio.h>
+ 
+/* function declaration */
+int min(int v[], int len, int mint) {
+
+	if(len==0)
+		return mint;
+	int minimum = mint;
+	if(minimum>v[len-1])
+		return min(v, len-1, v[len-1]);
+	return min(v, len-1, mint);
+	}
+	
+
+int main () {
+
+   int v[5] = {1,4,7,3,9};
+   int minimum;
+   int size = 5;
+
+   minimum = min( v, size, v[0] ) ;
+ 
+   printf( "Valore minimo: %i ", minimum );
+    
+   return 0;
+}
