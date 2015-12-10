@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 1
+
+int aggiungiNumero(int counter,int value, int dim, int puntatore) {
+    if(counter == dim) {
+        return NULL;
+    }
+    int *pnt = puntatore;
+    *pnt=value;
+    return 1;
+}
+
+int main(void) {
+int counter=0;
+int dim = SIZE;
+int val, i;
+int *p = malloc(sizeof(int)*SIZE);
+int *newP = p;
+do {
+   printf("Inserisci numero da aggiungere all'array: ");
+   scanf("%i", &val);
+
+   if(aggiungiNumero(counter, val, dim, newP)== 1) {
+    *newP++;
+    counter++;
+    printf("numero elementi: %i - spazio disponibile: %i - dimensione: %i\n", counter, dim-counter, dim);
+   }
+   else {
+
+    dim *=2;
+    newP = malloc(sizeof(int)*dim);
+    int *elseP =newP;
+
+  for(i=0; i<counter; i++) {
+        *newP = p[i];
+        newP++;
+        }
+        *newP=val;
+        newP++;
+        counter++;
+        p = elseP;
+        printf("numero elementi: %i - spazio disponibile: %i - dimensione: %i\n", counter, dim-counter, dim);
+   }
+} while (val!=0);
+
+for(p; p<newP; p++) {
+    printf("%i\n", *p);
+}
+
+	return 0;
+}
