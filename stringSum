@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+char *reverseString(char* s, int len) {
+    int j;
+    char* np = malloc(100*sizeof(char));
+    for(j=0; j<len;j++) {
+                np[j]=s[len-j-1];
+  }
+  np[j]='\0';
+  return np;
+}
+
+int main(void) {
+
+    printf("%s\n", stm("123", "143"));
+    printf("%s\n", stm("111111111111111111111111111110", "1"));
+    printf("%s\n", stm("0", "0"));
+    printf("%s\n", stm("123455", "143"));
+
+return 0;
+}
+
+int stm(char* n1, char* n2) {
+    n1 = reverseString(n1, strlen(n1));
+    n2 = reverseString(n2, strlen(n2));
+    char *s1 = (char*)malloc(100*sizeof(char));
+    somma(s1, strlen(n1)>strlen(n2)? n2: n1, strlen(n1)>strlen(n2)? n1: n2, 0);
+    s1 = reverseString(s1, strlen(s1));
+    return s1;
+}
+
+char digitToChar(int digit, char* c) {
+    char f = '0'+digit;
+    return f;
+}
+
+void somma(char* s1, char *a, char *b, int resto) {
+
+    if(*b=='\0') {
+        if(resto==0)
+        *s1 = '\0';
+        else {
+            *s1 = '1';
+            *++s1 = '\0';
+        }
+        return;
+    }
+    if(*a=='\0') {
+        *a='0';
+        *++a ='\0';
+        --a;
+    }
+    int n = myAtoi(*a)+myAtoi(*b)+resto;
+    int addendo=n%10;
+    int newresto=n/10;
+    *s1='0'+addendo;
+    somma(++s1, ++a, ++b, newresto);
+
+}
+
+int myAtoi(char* c) {
+return c - '0';
+}
