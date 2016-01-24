@@ -3,8 +3,8 @@
 #include <string.h>
 
 
-char *reverseString(char* s, int len) {
-    int j;
+char *reverseString(char* s, int len) {             //inverte tutti i caratteri di una stringa
+    int j;                                          //e ritorna un nuovo puntatore
     char* np = malloc(100*sizeof(char));
     for(j=0; j<len;j++) {
                 np[j]=s[len-j-1];
@@ -24,43 +24,43 @@ return 0;
 }
 
 int stm(char* n1, char* n2) {
-    n1 = reverseString(n1, strlen(n1));
-    n2 = reverseString(n2, strlen(n2));
-    char *s1 = (char*)malloc(100*sizeof(char));
-    somma(s1, strlen(n1)>strlen(n2)? n2: n1, strlen(n1)>strlen(n2)? n1: n2, 0);
-    s1 = reverseString(s1, strlen(s1));
+    n1 = reverseString(n1, strlen(n1));                                             //inverto le due stringhe per poter sommare i numeri a partire dall'ultima cifra
+    n2 = reverseString(n2, strlen(n2));                                             //inoltre evito che due numeri di lunghezza diversa diano risultati incorretti ES:(123+21 --> [123]+[21?])
+    char *s1 = (char*)malloc(100*sizeof(char));                                     //alloco spazio per il risultato
+    somma(s1, strlen(n1)>strlen(n2)? n2: n1, strlen(n1)>strlen(n2)? n1: n2, 0);     //sommo le stringhe passando come primo parametro la più corta
+    s1 = reverseString(s1, strlen(s1));                                             //inverto di nuovo la stringa per ottenere il risulato corretto
     return s1;
 }
 
-char digitToChar(int digit, char* c) {
-    char f = '0'+digit;
+char digitToChar(int digit, char* c) {          //dato un intero compreso tra 0 e 9 ritorna
+    char f = '0'+digit;                         //il suo valore sottoforma di char
     return f;
 }
 
 void somma(char* s1, char *a, char *b, int resto) {
 
-    if(*b=='\0') {
+    if(*b=='\0') {          //entro solo se b(la stringa più lunga) è terminata
         if(resto==0)
-        *s1 = '\0';
-        else {
-            *s1 = '1';
-            *++s1 = '\0';
+        *s1 = '\0';         //se non c'è resto aggiungo solo il terminatore
+        else {              //altrimenti aggiungo il resto, sposto il puntatore
+            *s1 = '1';      //e aggiungo il terminatore.
+            *++s1 = '\0';   //dopodichè esco dalla funzione
         }
         return;
     }
-    if(*a=='\0') {
-        *a='0';
-        *++a ='\0';
-        --a;
+    if(*a=='\0') {          //entro se il termine più breve(a) è terminato
+        *a='0';             //sostituisco il terminatore con il valore 0 per consentire
+        *++a ='\0';         //al programma di seguire la solita procedura, sposto avanti il puntatore 
+        --a;                //e aggiungo il terminatore, poi lo risposto indietro sullo 0
     }
-    int n = myAtoi(*a)+myAtoi(*b)+resto;
-    int addendo=n%10;
-    int newresto=n/10;
-    *s1='0'+addendo;
-    somma(++s1, ++a, ++b, newresto);
+    int n = myAtoi(*a)+myAtoi(*b)+resto;        //sommo i due valori interi dei caratteri puntati da a e b e l'eventuale resto
+    int cifra=n%10;                             //la nuova cifra della mia somma è il valore meno significativo di n
+    int newresto=n/10;                          //l'eventuale resto è dato dalla cifra più significativa di n
+    *s1='0'+cifra;                              //il carattere puntato da s1 è dato dal carattere corrispontente a cifra
+    somma(++s1, ++a, ++b, newresto);            //ripeto il procedimento spostando i puntatori e passando il nuovo resto
 
 }
 
-int myAtoi(char* c) {
+int myAtoi(char* c) {       //dato un carattere ritorna il suo valore numerico
 return c - '0';
 }
