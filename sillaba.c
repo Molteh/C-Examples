@@ -7,6 +7,11 @@ char* sillaba(char* parola) {
 char* sillabato=(char *)malloc(2*strlen(parola)*sizeof(char));
 char* remember = sillabato;
 
+int startWithVoc(char c){
+    if(strchr("aeiou", c)!=NULL) return 0;
+    return 1;
+}
+
 void delTratAddTerminator(char *sillabato) {
     *--sillabato='\0';
 }
